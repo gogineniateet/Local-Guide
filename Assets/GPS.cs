@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GPS : MonoBehaviour
 {
-    public static float myLatitude;
-    public static float myLongitude;
+    //public static float myLatitude;
+    //public static float myLongitude;
     public Text myLatText;
     public Text myLongText;
     public static GPS instance;
@@ -16,18 +16,19 @@ public class GPS : MonoBehaviour
         {
             instance = this;
         }
+        DontDestroyOnLoad(gameObject);
     }
     public void FixedUpdate()
     {
         if(Input.location.isEnabledByUser)
         {
-            myLatitude = Input.location.lastData.latitude;
-            myLatitude = Input.location.lastData.longitude;
+            //myLatitude = Input.location.lastData.latitude;
+            //myLatitude = Input.location.lastData.longitude;
         }
         //Debug.Log(myLatitude);
         //Debug.Log(myLongitude);
-        myLatText.text = myLatitude.ToString();
-        myLongText.text = myLongitude.ToString();
+        //myLatText.text = myLatitude.ToString();
+        //myLongText.text = myLongitude.ToString();
 
     }
 
