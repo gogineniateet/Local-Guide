@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
+using System;
 
 public class ListTheContent : MonoBehaviour
 {
@@ -13,7 +15,6 @@ public class ListTheContent : MonoBehaviour
             StartCoroutine(GetRequest());
         }
     }
-
 
     IEnumerator GetRequest()
     {
@@ -40,11 +41,31 @@ public class ListTheContent : MonoBehaviour
                     Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
                     break;
             }
+            CreateList(webRequest.downloadHandler.text);
         }
     }
+    public void CreateList(string jsonString)
+    {
+        if(jsonString != null)
+        {
+            Root theContent = new Root();
+            Newtonsoft.Json.JsonConvert.PopulateObject(jsonString, theContent);
+
+            for (int i = 0; i < theContent.results.Count; i++)
+            {
+                Debug.Log(theContent.results[0].name);
+                Debug.Log(theContent.results[0].geometry.location.lat);
+                Debug.Log(theContent.results[0].geometry.location.lng);
+            }
+            
+        }
+        
+    }
 }
+
+
 // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-/*
+
 public class Location
 {
     public double lat { get; set; }
@@ -117,5 +138,4 @@ public class Root
     public List<Result> results { get; set; }
     public string status { get; set; }
 }
-*/ 
 
